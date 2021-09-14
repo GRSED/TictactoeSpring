@@ -22,6 +22,6 @@ class TictactoeSpringApplicationTests {
 
 	@Test
 	public void serviceTest3() {
-		tictactoeService.insertTtt(new TictactoeDto(0, "X"));
+		tictactoeService.insertTtt(new TictactoeDto(0, "X", 0, 0));
 	}
 }

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface TictactoeMapper {
 
-    @Insert("INSERT INTO TTT VALUES(TTT_NO_SEQ.NEXTVAL, #{ttt_draw})")
+    @Insert("INSERT INTO TTT VALUES(TTT_NO_SEQ.NEXTVAL, #{ttt_draw}, #{ttt_row}, #{ttt_col})")
     int insertTtt(TictactoeDto tictactoeDto);
 
     @Delete("DELETE FROM TTT WHERE TTT_NO = (SELECT MAX(TTT_NO) FROM TTT)")

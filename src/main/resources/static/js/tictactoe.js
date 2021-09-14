@@ -41,14 +41,16 @@ function initialize() {
         }
     };
     xhr.onerror = function() {
-        console.log('init GET error');
+        console.log('initialize GET error');
     }
-    xhr.open('GET', 'init');
+    xhr.open('GET', 'initialize');
     xhr.send();
 }
 
 function draw(event) {
     console.log('draw() start');
+    const rowIdx = Array.from(document.getElementsByTagName('tr')).indexOf(event.target.parentNode);
+    const colIdx = event.target.getAttribute('name');
     
     if (event.target.innerHTML != ''){
         return;
@@ -64,7 +66,7 @@ function draw(event) {
     xhr.onerror = function() {
         console.log('draw GET error');
     }
-    xhr.open('GET', 'draw');
+    xhr.open('GET', 'draw?ttt_row=' + rowIdx + '&ttt_col=' + colIdx);
     xhr.send();
 }
 
