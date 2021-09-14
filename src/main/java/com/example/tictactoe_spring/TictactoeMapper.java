@@ -19,4 +19,16 @@ public interface TictactoeMapper {
 
     @Select("SELECT COUNT(*) FROM TTT")
     int countTtt();
+
+    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_ROW = #{ttt_row}) WHERE TTT_DRAW = #{ttt_draw}")
+    int checkEndRow(TictactoeDto tictactoeDto);
+
+    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL = #{ttt_col}) WHERE TTT_DRAW = #{ttt_draw}")
+    int checkEndCol(TictactoeDto tictactoeDto);
+
+    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL = TTT_ROW) WHERE TTT_DRAW = #{ttt_draw}")
+    int checkEndDiagonal(TictactoeDto tictactoeDto);
+
+    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL + TTT_ROW = #{reverseDiagonalSum}) WHERE TTT_DRAW = #{ttt_draw}")
+    int checkEndReverseDiagonal(ReverseDiagonal reverseDiagonal);
 }

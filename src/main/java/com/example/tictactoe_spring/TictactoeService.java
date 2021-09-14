@@ -27,4 +27,24 @@ public class TictactoeService {
         System.out.println("count");
         return tictactoeMapper.countTtt();
     }
+
+    public int checkEndRow(TictactoeDto tictactoeDto) {
+        System.out.println("checkEndRow");
+        return tictactoeMapper.checkEndRow(tictactoeDto);
+    }
+
+    public int checkEndCol(TictactoeDto tictactoeDto) {
+        System.out.println("checkEndCol");
+        return tictactoeMapper.checkEndCol(tictactoeDto);
+    }
+
+    public int checkEndDiagonal(TictactoeDto tictactoeDto) {
+        System.out.println("checkEndDiagonal");
+        return tictactoeMapper.checkEndDiagonal(tictactoeDto);
+    }
+
+    public int checkEndReverseDiagonal(ReverseDiagonal reverseDiagonal) {
+        System.out.println("checkEndReverseDiagonal");
+        return tictactoeMapper.checkEndReverseDiagonal(reverseDiagonal);
+    }
 }

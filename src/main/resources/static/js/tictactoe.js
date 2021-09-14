@@ -61,12 +61,13 @@ function draw(event) {
             cancleBtn.disabled = "";
             playHistory.push(event.target);
             event.target.innerHTML = xhr.responseText;
+            checkEnd(event, xhr.responseText);
         }
     };
     xhr.onerror = function() {
         console.log('draw GET error');
     }
-    xhr.open('GET', 'draw?ttt_row=' + rowIdx + '&ttt_col=' + colIdx);
+    xhr.open('GET', 'draw?rowIdx=' + rowIdx + '&colIdx=' + colIdx);
     xhr.send();
 }
 
@@ -79,77 +80,26 @@ function draw(event) {
 //     }
 // }
 
-// function checkEnd(event, player) {
-//     console.log('checkEnd() start');
-//     const eventRow = event.target.parentNode.getElementsByTagName('td');
-//     const eventCol = document.getElementsByName(event.target.getAttribute('name'));
-//     const rowIdx = Array.from(document.getElementsByTagName('tr')).indexOf(event.target.parentNode);
-//     const colIdx = event.target.getAttribute('name');
-    
-//     if (count < 2 * rowNum - 1) {
-//         console.log('checkEnd() end');
-//         return;
-//     }
+function checkEnd(event, mark) {
+    console.log('checkEnd() start');
+    const rowIdx = Array.from(document.getElementsByTagName('tr')).indexOf(event.target.parentNode);
+    const colIdx = event.target.getAttribute('name');
 
-//     // 가로줄 판정
-//     for (let index = 0; index < colNum; index++) {
-//         if (eventRow[index].innerHTML != player) {
-//             break;
-//         }
-//         if (index == colNum - 1) {
-//             printResult(player + ' 승리');
-//             return;
-//         }
-//     }
-
-//     // 세로줄 판정
-//     for (let index = 0; index < rowNum; index++) {
-//         if (eventCol[index].innerHTML != player) {
-//             break;
-//         }
-//         if (index == rowNum - 1) {
-//             printResult(player + ' 승리');
-//             return;
-//         }
-//     }
-
-//     // 대각선 판정
-//     if (rowIdx == colIdx) {
-//         for (let index = 0; index < rowNum; index++) {
-//             if (document.getElementsByName(index)[index].innerHTML != player) {
-//                 break;
-//             } 
-//             if (index == rowNum - 1) {
-//                 printResult(player + ' 승리');
-//                 return;
-//             }
-//         }
-//     }
-    
-//     // 역대각선 판정
-//     if (parseInt(rowIdx) + parseInt(colIdx) == rowNum - 1) {
-//         for (let index = 0; index < rowNum; index++) {
-//             if (document.getElementsByName(index)[rowNum - index - 1].innerHTML != player) {
-//                 break;
-//             }
-//             if (index == rowNum - 1) {
-//                 printResult(player + ' 승리');
-//                 return;
-//             }
-//         }
-//     }
-
-//     // 무승부 판정
-//     if (count == tdList.length) {
-//         printResult('무승부');
-//         return;
-//     }
-//     console.log('checkEnd() end');
-// }
-
-// function printResult(message) {
-//     setTimeout(() => {
-//         alert(message);
-//         initialize();
-//     }, 100);
-// }
+    xhr.onload = function() {
+        if (xhr.status === 200 || xhr.status === 201) {
+            if (xhr.responseText.trim() == '') {
+                return;
+            } else {
+                setTimeout(() => {
+                    alert(xhr.responseText);
+                    initialize();
+                }, 100);
+            }
+        }
+    };
+    xhr.onerror = function() {
+        console.log('checkEnd GET error');
+    }
+    xhr.open('GET', 'checkEnd?rowIdx=' + rowIdx + '&colIdx=' + colIdx + '&length=' + rowNum + '&mark=' + mark);
+    xhr.send();
+}
