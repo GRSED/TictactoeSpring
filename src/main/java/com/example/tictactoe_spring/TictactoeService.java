@@ -2,8 +2,10 @@ package com.example.tictactoe_spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class TictactoeService {
     @Autowired
     private TictactoeMapper tictactoeMapper;
@@ -13,9 +15,9 @@ public class TictactoeService {
         return tictactoeMapper.insertTtt(tictactoeDto);
     }
 
-    public int deleteTtt() {
+    public int cancelTtt() {
         System.out.println("delete");
-        return tictactoeMapper.deleteTtt();
+        return tictactoeMapper.cancelTtt();
     }
 
     public int initTtt() {

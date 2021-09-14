@@ -12,7 +12,7 @@ public interface TictactoeMapper {
     int insertTtt(TictactoeDto tictactoeDto);
 
     @Delete("DELETE FROM TTT WHERE TTT_NO = (SELECT MAX(TTT_NO) FROM TTT)")
-    int deleteTtt();
+    int cancelTtt();
 
     @Delete("DELETE FROM TTT")
     int initTtt();
@@ -20,15 +20,15 @@ public interface TictactoeMapper {
     @Select("SELECT COUNT(*) FROM TTT")
     int countTtt();
 
-    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_ROW = #{ttt_row}) WHERE TTT_DRAW = #{ttt_draw}")
+    @Select("SELECT COUNT(*) FROM TTT WHERE TTT_DRAW = #{ttt_draw} AND TTT_ROW = #{ttt_row}")
     int checkEndRow(TictactoeDto tictactoeDto);
 
-    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL = #{ttt_col}) WHERE TTT_DRAW = #{ttt_draw}")
+    @Select("SELECT COUNT(*) FROM TTT WHERE TTT_DRAW = #{ttt_draw} AND TTT_COL = #{ttt_col}")
     int checkEndCol(TictactoeDto tictactoeDto);
 
-    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL = TTT_ROW) WHERE TTT_DRAW = #{ttt_draw}")
+    @Select("SELECT COUNT(*) FROM TTT WHERE TTT_DRAW = #{ttt_draw} AND TTT_COL = TTT_ROW")
     int checkEndDiagonal(TictactoeDto tictactoeDto);
 
-    @Select("SELECT COUNT(*) FROM (SELECT TTT.TTT_DRAW FROM TTT WHERE TTT_COL + TTT_ROW = #{reverseDiagonalSum}) WHERE TTT_DRAW = #{ttt_draw}")
+    @Select("SELECT COUNT(*) FROM TTT WHERE TTT_DRAW = #{ttt_draw} AND TTT_COL + TTT_ROW = #{reverseDiagonalSum}")
     int checkEndReverseDiagonal(ReverseDiagonal reverseDiagonal);
 }
