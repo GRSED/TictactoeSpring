@@ -11,16 +11,16 @@ class TictactoeSpringApplicationTests {
 
 	@Test
 	public void serviceTest() {
-		System.out.println(tictactoeService.countTtt());
+
 	}
 
 	@Test
 	public void servieTest2() {
-		tictactoeService.cancelTtt();
+
 	}
 
 	@Test
 	public void serviceTest3() {
-		tictactoeService.insertTtt(new TictactoeDto(0, "X", 0, 0));
+
 	}
 }
