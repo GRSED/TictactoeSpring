@@ -49,6 +49,7 @@ function initialize() {
 
 function draw(event) {
     console.log('draw() start');
+    
     const rowIdx = Array.from(document.getElementsByTagName('tr')).indexOf(event.target.parentNode);
     const colIdx = event.target.getAttribute('name');
     
@@ -71,14 +72,23 @@ function draw(event) {
     xhr.send();
 }
 
-// function cancle() {
-//     console.log('cancle() start');
-//     playHistory.pop().innerHTML = '';
-//     count--;
-//     if (playHistory.length == 0) {
-//         cancleBtn.disabled = "disabled";
-//     }
-// }
+function cancle() {
+    console.log('cancle() start');
+    
+    xhr.onload = function() {
+        if (xhr.status === 200 || xhr.status === 201) {
+            playHistory.pop().innerHTML = '';
+            if (playHistory.length == 0) {
+                cancleBtn.disabled = "disabled";
+            }
+        }
+    };
+    xhr.onerror = function() {
+        console.log('cancle GET error');
+    }
+    xhr.open('GET', 'cancle');
+    xhr.send();
+}
 
 function checkEnd(event, mark) {
     console.log('checkEnd() start');

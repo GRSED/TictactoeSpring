@@ -60,4 +60,9 @@ public class TictactoeRestController {
 
         return "";
     }
+
+    @GetMapping(value = "cancle")
+    public void cancle() {
+        tictactoeService.deleteTtt();
+    }
 }
