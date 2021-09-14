@@ -23,4 +23,9 @@ public class TictactoeRestController {
 
         return mark;
     }
+
+    @GetMapping(value = "init")
+    public void init() {
+        tictactoeService.initTtt();
+    }
 }

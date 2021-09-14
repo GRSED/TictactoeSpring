@@ -26,14 +26,25 @@ document.getElementById('cancleBtn').addEventListener('click', () => {
 window.onload = initialize();
 
 function initialize() {
-    playHistory = [];
-    cancleBtn.disabled = "disabled";
-    for (let i = 0; i < colNum; i++) {
-        const col = document.getElementsByName(i);
-        for (let j = 0; j < rowNum; j++) {
-            col[j].innerHTML = '';            
+    console.log('initialize() start');
+
+    xhr.onload = function() {
+        if (xhr.status === 200 || xhr.status === 201) {
+            playHistory = [];
+            cancleBtn.disabled = "disabled";
+            for (let i = 0; i < colNum; i++) {
+                const col = document.getElementsByName(i);
+                for (let j = 0; j < rowNum; j++) {
+                    col[j].innerHTML = '';            
+                }
+            }
         }
+    };
+    xhr.onerror = function() {
+        console.log('init GET error');
     }
+    xhr.open('GET', 'init');
+    xhr.send();
 }
 
 function draw(event) {
