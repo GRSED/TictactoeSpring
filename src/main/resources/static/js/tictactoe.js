@@ -1,9 +1,10 @@
 const tdList = document.getElementById('tictactoe').getElementsByTagName('td');
 const rowNum = document.getElementsByTagName('tr').length;
 const colNum = document.querySelector("tr.row").getElementsByTagName('td').length;
-const cancleBtn = document.getElementById('cancleBtn');
+const cancelBtn = document.getElementById('cancelBtn');
 let playHistory;
 const xhr = new XMLHttpRequest();
+const sessionId = sessionStorage.getItem("sessionId");
 
 for (let index = 0; index < tdList.length; index++) {
     tdList[index].addEventListener('click', (event) => {
@@ -11,19 +12,11 @@ for (let index = 0; index < tdList.length; index++) {
     });
 }
 
-// let table = new Array(rowNum);
-
-// for (let i = 0; i < rowNum; i++) {
-//     for (let j = 0; j < colNum; j++) {
-//         table[i][j] = '';
-//     }    
-// }
-
-document.getElementById('cancleBtn').addEventListener('click', () => {
-    cancle();
+document.getElementById('cancelBtn').addEventListener('click', () => {
+    cancel();
 });
 
-window.onload = initialize();
+window.onload = initialize;
 
 function initialize() {
     console.log('initialize() start');
@@ -31,7 +24,7 @@ function initialize() {
     xhr.onload = function() {
         if (xhr.status === 200 || xhr.status === 201) {
             playHistory = [];
-            cancleBtn.disabled = "disabled";
+            cancelBtn.disabled = "disabled";
             for (let i = 0; i < colNum; i++) {
                 const col = document.getElementsByName(i);
                 for (let j = 0; j < rowNum; j++) {
@@ -43,7 +36,7 @@ function initialize() {
     xhr.onerror = function() {
         console.log('initialize GET error');
     }
-    xhr.open('GET', 'initialize');
+    xhr.open('GET', 'initialize?sessionId=' + sessionId);
     xhr.send();
 }
 
@@ -59,7 +52,7 @@ function draw(event) {
     
     xhr.onload = function() {
         if (xhr.status === 200 || xhr.status === 201) {
-            cancleBtn.disabled = "";
+            cancelBtn.disabled = "";
             playHistory.push(event.target);
             event.target.innerHTML = xhr.responseText;
             checkEnd(event, xhr.responseText);
@@ -68,25 +61,25 @@ function draw(event) {
     xhr.onerror = function() {
         console.log('draw GET error');
     }
-    xhr.open('GET', 'draw?rowIdx=' + rowIdx + '&colIdx=' + colIdx);
+    xhr.open('GET', 'draw?rowIdx=' + rowIdx + '&colIdx=' + colIdx + "&sessionId=" + sessionId);
     xhr.send();
 }
 
-function cancle() {
-    console.log('cancle() start');
+function cancel() {
+    console.log('cancel() start');
     
     xhr.onload = function() {
         if (xhr.status === 200 || xhr.status === 201) {
             playHistory.pop().innerHTML = '';
             if (playHistory.length == 0) {
-                cancleBtn.disabled = "disabled";
+                cancelBtn.disabled = "disabled";
             }
         }
     };
     xhr.onerror = function() {
-        console.log('cancle GET error');
+        console.log('cancel GET error');
     }
-    xhr.open('GET', 'cancle');
+    xhr.open('GET', 'cancel?sessionId=' + sessionId);
     xhr.send();
 }
 
@@ -110,6 +103,10 @@ function checkEnd(event, mark) {
     xhr.onerror = function() {
         console.log('checkEnd GET error');
     }
-    xhr.open('GET', 'checkEnd?rowIdx=' + rowIdx + '&colIdx=' + colIdx + '&length=' + rowNum + '&mark=' + mark);
+    xhr.open('GET', 'checkEnd?rowIdx=' + rowIdx + 
+                    '&colIdx=' + colIdx + 
+                    '&length=' + rowNum + 
+                    '&mark=' + mark + 
+                    '&sessionId=' + sessionId);
     xhr.send();
 }

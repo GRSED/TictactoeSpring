@@ -10,26 +10,26 @@ public class TictactoeService {
     @Autowired
     private TictactoeMapper tictactoeMapper;
 
-    public String draw(int rowIdx, int colIdx) {
+    public String draw(int rowIdx, int colIdx, String sessionId) {
         String mark = "";
 
-        if (tictactoeMapper.countTtt()%2 == 0) {
+        if (tictactoeMapper.countTtt(sessionId)%2 == 0) {
             mark = "X";
         } else {
             mark = "O";
         }
 
-        tictactoeMapper.insertTtt(new TictactoeDto(0, mark, rowIdx, colIdx));
+        tictactoeMapper.insertTtt(new TictactoeDto(0, mark, rowIdx, colIdx, sessionId));
 
         return mark;
     }
 
-    public String checkEnd(int rowIdx, int colIdx, int length, String mark) {
-        if (tictactoeMapper.countTtt() < length * 2 - 1) {
+    public String checkEnd(int rowIdx, int colIdx, int length, String mark, String sessionId) {
+        if (tictactoeMapper.countTtt(sessionId) < length * 2 - 1) {
             return "";
         }
 
-        TictactoeDto tictactoeDto = new TictactoeDto(0, mark, rowIdx, colIdx);
+        TictactoeDto tictactoeDto = new TictactoeDto(0, mark, rowIdx, colIdx, sessionId);
 
         if (tictactoeMapper.checkEndRow(tictactoeDto) == length) {
             return mark + " 승리";
@@ -45,7 +45,7 @@ public class TictactoeService {
             }
         }
 
-        ReverseDiagonal reverseDiagonal = new ReverseDiagonal(length - 1, mark);
+        ReverseDiagonal reverseDiagonal = new ReverseDiagonal(length - 1, mark, sessionId);
 
         if (rowIdx + colIdx == length - 1) {
             if (tictactoeMapper.checkEndReverseDiagonal(reverseDiagonal) == length) {
@@ -53,19 +53,20 @@ public class TictactoeService {
             }
         }
 
-        if (tictactoeMapper.countTtt() == length * length) {
+        if (tictactoeMapper.countTtt(sessionId) == length * length) {
             return "무승부";
         }
         return "";
     }
 
-    public int cancelTtt() {
+    public int cancel(String sessionId) {
         System.out.println("delete");
-        return tictactoeMapper.cancelTtt();
+        return tictactoeMapper.cancelTtt(sessionId);
     }
 
-    public int initTtt() {
+    public int initialize(String sessionId) {
         System.out.println("init");
-        return tictactoeMapper.initTtt();
+        
+        return tictactoeMapper.initTtt(sessionId);
     }
 }

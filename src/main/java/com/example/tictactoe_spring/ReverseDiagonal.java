@@ -10,4 +10,5 @@ import lombok.ToString;
 public class ReverseDiagonal {
     private int reverseDiagonalSum;
     private String ttt_draw;
+    private String ttt_sessionId;
 }

@@ -12,4 +12,5 @@ public class TictactoeDto {
     private String ttt_draw;
     private int ttt_row;
     private int ttt_col;
+    private String ttt_sessionId;
 }
