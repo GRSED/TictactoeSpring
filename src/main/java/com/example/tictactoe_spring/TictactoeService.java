@@ -11,6 +11,7 @@ public class TictactoeService {
     private TictactoeMapper tictactoeMapper;
 
     public String draw(int rowIdx, int colIdx, String sessionId) {
+        System.out.println("draw");
         String mark = "";
 
         if (tictactoeMapper.countTtt(sessionId)%2 == 0) {
@@ -25,6 +26,7 @@ public class TictactoeService {
     }
 
     public String checkEnd(int rowIdx, int colIdx, int length, String mark, String sessionId) {
+        System.out.println("checkEnd");
         if (tictactoeMapper.countTtt(sessionId) < length * 2 - 1) {
             return "";
         }
@@ -60,13 +62,12 @@ public class TictactoeService {
     }
 
     public int cancel(String sessionId) {
-        System.out.println("delete");
+        System.out.println("cancel");
         return tictactoeMapper.cancelTtt(sessionId);
     }
 
     public int initialize(String sessionId) {
-        System.out.println("init");
-        
+        System.out.println("initialize");
         return tictactoeMapper.initTtt(sessionId);
     }
 }

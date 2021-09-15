@@ -16,6 +16,10 @@ document.getElementById('cancelBtn').addEventListener('click', () => {
     cancel();
 });
 
+window.addEventListener('beforeunload', () => {
+    initialize();
+});
+
 window.onload = initialize;
 
 function initialize() {
